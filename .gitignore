@@ -1,3 +1,8 @@
 images
 7color
 env
+__pycache__
+current_index.txt
+
+**/node_modules/
+
