@@ -25,11 +25,19 @@ request = chip.request_lines(consumer="inky7-buttons", config=line_config)
 
 
 def main_event_loop():
-    while True: # sometimes needed to keep the program runnig
+    virtual_env_python = "/home/serban/Projects/sentimental-frame/env/bin/python"
+    
+    while True:  # Keep the program running
         for event in request.read_edge_events():
             if event.line_offset == BUTTON_A_PIN or event.line_offset == BUTTON_B_PIN:  # Ensure it's the correct button
                 direction = "up" if event.line_offset == BUTTON_A_PIN else "down"
-                subprocess.run(["python3", "sentimental-frame-next-image.py", direction], capture_output=True, text=True)
+                yolo = subprocess.run(
+                    [virtual_env_python, "sentimental-frame-next-image.py", direction],
+                    capture_output=True,
+                    text=True,
+                    cwd="/home/serban/Projects/sentimental-frame"  # Ensure correct working directory
+                )
+                print(yolo)
                 clear_pending_events()
    
 
